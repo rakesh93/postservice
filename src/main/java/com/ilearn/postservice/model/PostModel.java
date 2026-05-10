@@ -16,26 +16,26 @@ import jakarta.persistence.Table;
     	@GeneratedValue(strategy = GenerationType.IDENTITY)
     	private Long id;
     	
-    	@Column(name = "title_name")
-    	private String titleName;
+    	@Column(name = "title")
+    	private String title;
 
-    	@Column(name = "description")
-    	private String description;
+    	@Column(name = "content")
+    	private String content;
     	
-    	@Column(name = "post_by_id")
-    	private String postById;
+    	@Column(name = "user_id")
+    	private String userId;
     	
     	@Column(name = "post_date", updatable = false)
     	private LocalDateTime createdTime = LocalDateTime.now();
 
     	public PostModel() {}
     	
-		public PostModel(Long id, String titleName, String description, String postById) {
+		public PostModel(Long id, String title, String content, String userId) {
 			super();
 			this.id = id;
-			this.titleName = titleName;
-			this.description = description;
-			this.postById = postById;
+			this.title = title;
+			this.content = content;
+			this.userId = userId;
 		}
 
 		public Long getId() {
@@ -46,36 +46,34 @@ import jakarta.persistence.Table;
 			this.id = id;
 		}
 
-		public String getTitleName() {
-			return titleName;
+		public String getTitle() {
+			return title;
 		}
 
-		public void setTitleName(String titleName) {
-			this.titleName = titleName;
+		public void setTitle(String title) {
+			this.title = title;
 		}
 
-		public String getDescription() {
-			return description;
+		public String getContent() {
+			return content;
 		}
 
-		public void setDescription(String description) {
-			this.description = description;
+		public void setContent(String content) {
+			this.content = content;
 		}
 
-		public String getPostById() {
-			return postById;
+		public String getUserId() {
+			return userId;
 		}
 
-		public void setPostById(String postById) {
-			this.postById = postById;
+		public void setUserId(String userId) {
+			this.userId = userId;
 		}
 
 		@Override
 		public String toString() {
-			return "PostModel [id=" + id + ", titleName=" + titleName + ", description=" + description + ", postById="
-					+ postById + ", createdTime=" + createdTime + "]";
-		}
-    
-    	
+			return "PostModel [id=" + id + ", title=" + title + ", content=" + content + ", userId=" + userId
+					+ "]";
+		}	
     
 }
