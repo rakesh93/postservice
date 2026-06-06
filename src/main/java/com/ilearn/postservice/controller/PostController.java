@@ -38,4 +38,11 @@ public class PostController {
 	    return postService.getPosts();
 	}
     
+    //Rest Call by Feign_Client
+    @GetMapping("/user-feign/{userRole}")
+    public List<UserModel> getUserDetailsByFeign(
+            @PathVariable String userRole) {
+        return postService.getUserFromUserServiceByFeignClient(userRole);
+    }
+    
 }

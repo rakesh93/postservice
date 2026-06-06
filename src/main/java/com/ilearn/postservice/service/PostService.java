@@ -1,5 +1,6 @@
 package com.ilearn.postservice.service;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,11 +14,17 @@ import com.ilearn.postservice.model.PostModel;
 import com.ilearn.postservice.model.UserModel;
 import com.ilearn.postservice.repository.PostRepository;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
+
+
 @Service
 public class PostService {
 
 	@Autowired
 	private PostRepository postRepository;
+
+	@Autowired
+	private UserFeignClient userFeignClient;
 
 	RestTemplate restTemplate = new RestTemplate();
 
@@ -37,5 +44,18 @@ public class PostService {
 	public List<PostModel> getPosts() {
 		return postRepository.findAll();
 	}
+	
 
+	@CircuitBreaker(name = "userService", fallbackMethod = "getUsersFallback")
+	public List<UserModel> getUserFromUserServiceByFeignClient(String userRole) {
+	    return userFeignClient.getUsers(userRole);
+	}
+	
+	public List<UserModel> getUsersFallback(
+	        String userRole,
+	        Exception ex) {
+		System.out.println("User Service is down: " + ex.getMessage());
+	    return Collections.emptyList();
+	}
+	
 }
